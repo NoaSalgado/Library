@@ -1,19 +1,35 @@
-// Global variables
-let library = [];
+// Objects
+class Book {
+  constructor(cover, title, author, pages, read) {
+    this.cover = cover;
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+  }
+}
+
+class Library {
+  constructor() {
+    this.books = [];
+  }
+
+  addBook(book) {
+    if (!this.books.includes(book.name)) {
+      this.books.push(book);
+    }
+  }
+
+  removeBook(bookTitle) {
+    this.books = this.books.filter((book) => book.title !== bookTitle);
+  }
+}
+const library = new Library();
 
 // DOM Elements
 const newBookBtn = document.querySelector(".btn--new-book");
 const form = document.querySelector(".form");
 const booksContainer = document.querySelector(".books-container");
-
-// Book Constructor
-function Book(cover, title, author, pages, read) {
-  this.cover = cover;
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
-}
 
 function showForm() {
   form.classList.add("visible");
@@ -23,10 +39,6 @@ function hideForm() {
   form.classList.remove("visible");
 }
 
-function addBook(book) {
-  library.push(book);
-}
-
 function changeBookStatus(e) {
   const status = e.target.parentNode.nextSibling.textContent;
   e.target.parentNode.nextSibling.textContent =
@@ -34,16 +46,15 @@ function changeBookStatus(e) {
   const bookTitle =
     e.target.parentNode.parentNode.parentNode.previousSibling.previousSibling
       .previousSibling.textContent;
-  const targetBook = library.filter((book) => book.title === bookTitle);
+  const targetBook = library.books.filter((book) => book.title === bookTitle);
   targetBook[0].read = !targetBook[0].read;
-  console.log(targetBook[0].read);
 }
 
 function removeBook(e) {
   const bookTitle =
     e.target.parentNode.parentNode.previousSibling.previousSibling
       .previousSibling.textContent;
-  library = library.filter((book) => book.title !== bookTitle);
+  library.removeBook(bookTitle);
   updateBooksContainer();
 }
 
@@ -97,7 +108,7 @@ function displayBook(book) {
 
 function updateBooksContainer() {
   booksContainer.innerHTML = "";
-  library.forEach((book) => {
+  library.books.forEach((book) => {
     displayBook(book);
     console.log(book);
   });
@@ -118,6 +129,6 @@ form.addEventListener("submit", (e) => {
   const book = new Book(imageUrl, title, author, pages, isRead);
 
   hideForm();
-  addBook(book);
+  library.addBook(book);
   displayBook(book);
 });
