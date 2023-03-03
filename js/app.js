@@ -31,6 +31,7 @@ const newBookBtn = document.querySelector(".btn--new-book");
 const form = document.querySelector(".form");
 const booksContainer = document.querySelector(".books-container");
 
+// Functionality
 function showForm() {
   form.classList.add("visible");
 }
@@ -78,20 +79,19 @@ function displayBook(book) {
   bookPages.textContent = `${book.pages} pages`;
 
   const bookStatus = document.createElement("div");
-  bookStatus.classList.add("flex");
-  const genericDiv = document.createElement("div");
-  genericDiv.classList.add("flex");
+  bookStatus.classList.add("flex", "book__status");
+
   const toggleReadBtn = document.createElement("button");
   toggleReadBtn.classList.add("btn", "btn--toggle-read");
   toggleReadBtn.innerHTML = '<i class="fa-solid fa-book-open"></i>';
   const isReadText = document.createElement("p");
   isReadText.textContent = `${book.read ? "READ" : "NOT READ"}`;
-  genericDiv.append(toggleReadBtn);
-  genericDiv.append(isReadText);
+
   const removeBtn = document.createElement("button");
   removeBtn.classList.add("btn", "btn--remove");
   removeBtn.innerHTML = `<i class="fa-solid fa-trash-can"></i>`;
-  bookStatus.append(genericDiv);
+  bookStatus.append(toggleReadBtn);
+  bookStatus.append(isReadText);
   bookStatus.append(removeBtn);
 
   bookCard.append(bookCover);
