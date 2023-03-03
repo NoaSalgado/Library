@@ -121,10 +121,18 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
 
   const imageUrl = document.querySelector("#image-url").value;
+  document.querySelector("#image-url").value = "";
   const title = document.querySelector("#title").value;
+  document.querySelector("#title").value = "";
   const author = document.querySelector("#author").value;
+  document.querySelector("#author").value = "";
   const pages = document.querySelector("#pages").value;
+  document.querySelector("#pages").value = "";
   const isRead = document.querySelector("#read").checked;
+
+  if (isRead) {
+    document.querySelector("#read").checked = false;
+  }
 
   const book = new Book(imageUrl, title, author, pages, isRead);
 
