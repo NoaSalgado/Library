@@ -18,10 +18,12 @@ class Library {
     if (!this.books.includes(book.name)) {
       this.books.push(book);
     }
+    localStorage.setItem("books", JSON.stringify(this.books));
   }
 
   removeBook(bookTitle) {
     this.books = this.books.filter((book) => book.title !== bookTitle);
+    localStorage.setItem("books", JSON.stringify(this.books));
   }
 }
 const library = new Library();
@@ -108,11 +110,13 @@ function displayBook(book) {
 
 function updateBooksContainer() {
   booksContainer.innerHTML = "";
-  library.books.forEach((book) => {
+  const books = JSON.parse(localStorage.getItem("books") || "[]");
+  books.forEach((book) => {
     displayBook(book);
-    console.log(book);
   });
 }
+
+updateBooksContainer();
 
 // Events
 newBookBtn.addEventListener("click", showForm);
